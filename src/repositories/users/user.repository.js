@@ -1,6 +1,9 @@
 import { logger } from '../../config/pino.js';
 import { User } from '../../models/user.model.js';
 
+// no puedo fijarme si existe o no, xq el getbyId da error y el trycath me manda el error
+//habria q ver como usarlo teniendo en cuenta eso
+
 export class UserList {
   #dao;
   constructor(dao) {
@@ -9,9 +12,13 @@ export class UserList {
 
   async save(user) {
     try {
-      await this.#dao.save(user.datos);
+      // const search = await this.#dao.getById(user.id)
+      // console.log(search);
+      // if (search) throw new Error('no crear cuenta, ya tiene una') // manejador de errores
+      await this.#dao.save(user.data());
     } catch (e) {
-      logger.error(e);
+      console.log(e);
+      // logger.error(e);
       throw e;
     }
   }

@@ -1,5 +1,5 @@
 import { createID } from '../utils/createID.js';
-// userDTO
+import { UserDto } from '../dtos/UserDto.js';
 
 
 // el que crea el usuario, antes crea un carrito y le da al usuario ese ID de carrito
@@ -59,6 +59,9 @@ export class User {
   }
   set image(image) {
     this.#image = image;
+  }
+  set idCart(idCart) {
+    this.#idCart = idCart;
   }
 
   data() {

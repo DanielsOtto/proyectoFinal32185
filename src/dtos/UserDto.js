@@ -1,9 +1,10 @@
 export class UserDto {
-  constructor({ id, name, price, description, image, idCart }) {
+  constructor({ id, email, password, name, lastname, image, idCart }) {
     this.id = id;
+    this.email = email;
+    this.password = password;
     this.name = name;
-    this.price = price;
-    this.description = description;
+    this.lastname = lastname;
     this.image = image;
     this.idCart = idCart;
   }

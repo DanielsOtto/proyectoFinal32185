@@ -11,6 +11,9 @@ dotenv.config({
 export const MONGO_CNS = process.env.MONGODB;
 
 
+
+export const HASH_SECRET = process.env.HASH_SECURITY + process.env.SALT_ROUNDS + process.env.LINE_SECRET;
+
 // EMAILS
 export const NODEMAILER_CONFIG = {
   host: 'smtp.ethereal.email',

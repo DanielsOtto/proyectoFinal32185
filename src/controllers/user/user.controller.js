@@ -7,9 +7,8 @@ import { usersService } from '../../services/user.service/index.js';
 export class UserController {
 
   async save({ body }, res) {
-    const object = body;
     try {
-      const user = await usersService.save(object);
+      const user = await usersService.save(body);
       res.status(201).json(user);
     } catch (e) {
       logger.error(e);
@@ -28,16 +27,16 @@ export class UserController {
     }
   }
 
-  async deleteById({ params }, res) {
-    const { id } = params;
-    try {
-      await usersService.deleteById(id);
-      res.sendStatus(200);
-    } catch (e) {
-      logger.error(e);
-      throw e;
-    }
-  }
+  // async deleteById({ params }, res) {
+  //   const { id } = params;
+  //   try {
+  //     await usersService.deleteById(id);
+  //     res.sendStatus(200);
+  //   } catch (e) {
+  //     logger.error(e);
+  //     throw e;
+  //   }
+  // }
 }
 
 

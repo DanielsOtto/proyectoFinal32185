@@ -10,9 +10,10 @@ export class MongoDb {
   async save(dto) {
     try {
       const result = await this.#collection.insertOne(dto);
-      console.log(result); // REVISAR
+      // if (!result.acknoledged) throw new 'no se guardo nada' // manejo de errores
     } catch (e) {
-      logger.error(e);
+      // logger.error(e);
+      console.log(`error ${e}`);
       throw e;
     }
   }
@@ -31,8 +32,8 @@ export class MongoDb {
 
   async getById(id) {
     try {
-      const dto = await this.#collection.findOne({ id }); // id: id ?
-      if (!dto) throw new 'id no encontrado'
+      const dto = await this.#collection.findOne({ id: id }); // id: id ?
+      if (!dto) throw new Error('id no encontrado') //manejar errores
       //manejo de errores
       return dto;
     } catch (e) {
