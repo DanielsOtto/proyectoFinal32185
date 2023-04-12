@@ -1,5 +1,9 @@
 import { logger } from '../config/pino.js';
-// FALTA MANEJO DE ERRORES
+import { EmptyCollection } from '../errors/EmptyCollection.js';
+import { UnsavedObject } from '../errors/UnsavedObject.js';
+import { IdNotFoundError } from '../errors/IdNotFoundError.js';
+import { ObjectNotUpdated } from '../errors/ObjectNotUpdated.js';
+import { ObjectNotDeleted } from '../errors/ObjectNotDeleted.js';
 
 export class MongoDb {
   #collection;
@@ -10,32 +14,38 @@ export class MongoDb {
   async save(dto) {
     try {
       const result = await this.#collection.insertOne(dto);
-      // if (!result.acknoledged) throw new 'no se guardo nada' // manejo de errores
+      if (!result.acknoledged) throw new UnsavedObject(dto) // manejo de errores
     } catch (e) {
-      // logger.error(e);
-      console.log(`error ${e}`);
-      throw e;
+      logger.error(e);
+      console.log(`error ${e}`); // no va esto
     }
   }
 
   async getAll() {
     try {
       const dtos = await this.#collection.find().toArray();
-      if (!dtos) throw new 'error coleccion vacia'
-      //manejo de errores
+      if (!dtos) throw new EmptyCollection(dtos);
       return dtos;
     } catch (e) {
       logger.error(e);
-      throw e;
     }
   }
 
   async getById(id) {
     try {
-      const dto = await this.#collection.findOne({ id: id }); // id: id ?
-      if (!dto) throw new Error('id no encontrado') //manejar errores
-      //manejo de errores
+      const dto = await this.#collection.findOne({ id: id });
+      if (!dto) throw new IdNotFoundError(id);
       return dto;
+    } catch (e) {
+      logger.error(e);
+    }
+  }
+
+  async findByEmail(email) {
+    try {
+      const one = await this.#collection.findOne({ email: email });
+      // sin manejo de errores, para poder utilizarlo libremente
+      return one;
     } catch (e) {
       logger.error(e);
       throw e;
@@ -45,37 +55,30 @@ export class MongoDb {
   async updateById(id, dto) {
     try {
       const result = await this.#collection.replaceOne({ id }, dto);
-      if (!result.acknoledged) throw new 'error al actualizar'
-      if (result.matchedCount === 0) throw new 'id no encontrado'
-      if (result.modifiedCount === 0) 'no se modifico nada'
-      //manejo de errores
+      if (!result.acknoledged) throw new ObjectNotUpdated(dto);
+      if (result.matchedCount === 0) throw new IdNotFoundError(id);
     } catch (e) {
       logger.error(e);
-      throw e;
     }
   }
 
   async deleteById(id) {
     try {
       const result = await this.#collection.deleteOne({ id });
-      if (!result.acknoledged) 'error al eliminar'
-      if (result.matchedCount === 0) 'no se encontro el ID'
-      if (result.deletedCount === 0) 'no se elimino nada'
-      //manejo de errores
+      if (!result.acknoledged) throw new ObjectNotDeleted(result);
+      if (result.matchedCount === 0) throw new IdNotFoundError(id);
     } catch (e) {
       logger.error(e);
-      throw e;
     }
   }
 
   async deleteAll() {
     try {
       const result = await this.#collection.deleteMany({});
-      if (!result.acknoledged) 'error al eliminar'
-      if (result.deletedCount === 0) 'no se elimino nada'
+      if (!result.acknoledged) throw new ObjectNotDeleted({ objects: 'all' });
+      if (result.deletedCount === 0) throw new IdNotFoundError(id);
     } catch (e) {
       logger.error(e);
-      throw e;
     }
   }
 }

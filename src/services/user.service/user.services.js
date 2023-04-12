@@ -1,6 +1,6 @@
 import { logger } from '../../config/pino.js';
 import { User } from '../../models/user.model.js';
-import { userList } from '../../repositories/users/index.js';
+import { userList } from '../../repositories/user.repository/index.js';
 import createCart from '../../models/cart/index.js';
 import { encryptPassword } from '../../utils/hashPass.js';
 
@@ -11,9 +11,7 @@ import { encryptPassword } from '../../utils/hashPass.js';
 export class UsersService {
   async save(body) {
     try {
-      // const email = ''  findOne
-      // si existe return error
-      const password = encryptPassword(body.password);
+      const password = encryptPassword(body);
       const cart = createCart(); // esto esta mal, tiene que llamar al repo de carrito, y ahi crearlo
       const idCart = cart.id;
       const user = new User(body);
@@ -22,7 +20,8 @@ export class UsersService {
       await userList.save(user);
       return user.data();
     } catch (e) {
-      logger.error(e);
+      console.log(e);
+      // logger.error(e);
       throw e;
     }
   }

@@ -12,22 +12,10 @@ export class UserList {
 
   async save(user) {
     try {
-      // const search = await this.#dao.getById(user.id)
-      // console.log(search);
-      // if (search) throw new Error('no crear cuenta, ya tiene una') // manejador de errores
       await this.#dao.save(user.data());
     } catch (e) {
       console.log(e);
       // logger.error(e);
-      throw e;
-    }
-  }
-
-  async getAll() {
-    try {
-      return await this.#dao.getAll();
-    } catch (e) {
-      logger.error(e);
       throw e;
     }
   }
@@ -42,18 +30,9 @@ export class UserList {
     }
   }
 
-  async deleteById(id) {
+  async findByEmail(email) {
     try {
-      await this.#dao.deleteById(id);
-    } catch (e) {
-      logger.error(e);
-      throw e;
-    }
-  }
-
-  async deleteAll() {
-    try {
-      await this.#dao.deleteAll();
+      return await this.#dao.findByEmail(email);
     } catch (e) {
       logger.error(e);
       throw e;
