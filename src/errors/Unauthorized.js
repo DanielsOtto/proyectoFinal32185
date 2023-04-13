@@ -1,6 +1,10 @@
 export class Unauthorized extends Error {
-    constructor() {
-        super('Unauthorized access');
-        this.type = 'UNAUTHORIZED';
+  constructor(message) {
+    if (message) {
+      super(message);
+    } else {
+      super('Unauthorized access');
     }
+    this.type = 'UNAUTHORIZED';
+  }
 }

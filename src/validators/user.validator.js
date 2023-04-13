@@ -1,7 +1,7 @@
 import { InvalidArgument } from '../errors/InvalidArgumentError.js';
 import { InvalidFormat } from '../errors/InvalidFormat.js';
 
-// TERMINADO
+// REVISAR AL FINAL SI FALTAN MAS VALIDACIONES -- TERMINADO ?
 
 export class UserValidator {
   constructor({ email, password, name, lastname, image }) {

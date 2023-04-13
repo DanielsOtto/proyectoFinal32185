@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
 import { TOKEN_SECRET } from '../config/config.js';
 
+
 export function generateToken(user) {
   return jwt.sign(
     {
@@ -9,7 +10,7 @@ export function generateToken(user) {
       idCart: user.idCart
     },
     TOKEN_SECRET,
-    { expiresIn: '1m' }
+    { expiresIn: '10m' }
   );
 }
 

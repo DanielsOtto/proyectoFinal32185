@@ -14,8 +14,7 @@ export class UserList {
     try {
       await this.#dao.save(user.data());
     } catch (e) {
-      console.log(e);
-      // logger.error(e);
+      logger.error(e);
       throw e;
     }
   }
