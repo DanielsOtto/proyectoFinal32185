@@ -3,7 +3,7 @@ export class ForbiddenAccess extends Error {
     if (email) {
       super(`Forbidden access: ${email}, nonexistent token!`);
     } else {
-      super(`Forbidden access, nonexistent token!`);
+      super(`Forbidden access!!`);
     }
     this.type = 'FORBIDDEN_ACCESS';
   }

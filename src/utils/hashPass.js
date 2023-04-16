@@ -1,9 +1,9 @@
 import bcrypt from 'bcrypt';
 // import { findByEmail } from '../models/userModel.js'; ?? A MODELO NO, AL REPO
 import { userList } from '../repositories/user.repository/index.js';
+import { Unauthorized } from '../errors/Unauthorized.js';
 import { HASH_SECRET } from '../config/config.js';
 import { logger } from '../config/pino.js';
-import { Unauthorized } from '../errors/Unauthorized.js';
 
 export function encryptPassword({ password }) {
   return bcrypt.hashSync(password, HASH_SECRET);

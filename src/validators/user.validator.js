@@ -5,24 +5,30 @@ import { InvalidFormat } from '../errors/InvalidFormat.js';
 
 export class UserValidator {
   constructor({ email, password, name, lastname, image }) {
-    if (typeof email !== 'string' || !email) throw new InvalidArgument('email');
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) throw new InvalidFormat('email');
     this.email = email;
+    if (typeof this.email !== 'string' || !this.email) throw new InvalidArgument('email');
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.email)) throw new InvalidFormat('email');
+    if (this.email.replace(/\s+/g, '').length === 0) throw new InvalidArgument('email');
 
-    if (typeof password !== 'string' || !password) throw new InvalidArgument('password');
-    if (password.length < 6) throw new InvalidFormat('the password is short. Must be 6 characters long')
     this.password = password;
+    if (typeof this.password !== 'string' || !this.password) throw new InvalidArgument('password');
+    if (this.password.length < 6) throw new InvalidFormat('the password is short. Must be 6 characters long')
+    if (this.password.replace(/\s+/g, '').length === 0) throw new InvalidArgument('password');
 
-    if (typeof name !== 'string' || !name) throw new InvalidArgument('name');
-    if (name.length >= 85) throw new InvalidFormat('the name is too long. Must be less than 85 characters');
     this.name = name;
+    if (typeof this.name !== 'string' || !this.name) throw new InvalidArgument('name');
+    if (this.name.length >= 85) throw new InvalidFormat('the name is too long. Must be less than 85 characters');
+    if (this.name.replace(/\s+/g, '').length === 0) throw new InvalidArgument('name');
 
-    if (typeof lastname !== 'string' || !lastname) throw new InvalidArgument('lastname');
-    if (lastname.length >= 85) throw new InvalidFormat('the lastname is too long. Must be less than 85 characters');
     this.lastname = lastname;
+    if (typeof this.lastname !== 'string' || !this.lastname) throw new InvalidArgument('lastname');
+    if (this.lastname.length >= 85) throw new InvalidFormat('the lastname is too long. Must be less than 85 characters');
+    if (this.lastname.replace(/\s+/g, '').length === 0) throw new InvalidArgument('lastname');
 
-    if (typeof image !== 'string' || !image) throw new InvalidArgument('image');
-    if (image.length >= 125) throw new InvalidFormat('the image link is too long. Must be less than 125 characters');
     this.image = image;
+    if (typeof this.image !== 'string' || !this.image) throw new InvalidArgument('image');
+    if (this.image.length >= 125) throw new InvalidFormat('the image link is too long. Must be less than 125 characters');
+    if (this.image.replace(/\s+/g, '').length === 0) throw new InvalidArgument('image');
+    //validar el formato de la imagen
   }
 }

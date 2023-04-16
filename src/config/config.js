@@ -10,9 +10,12 @@ dotenv.config({
 
 export const PORT = process.env.PORT;
 
+// ADMIN
+export const ADMIN = 'admin@admin.com';
+
+
 //mongo
 export const MONGO_CNS = process.env.MONGODB;
-
 
 // bcrypt
 export const HASH_SECRET = process.env.HASH_SECURITY + process.env.SALT_ROUNDS + process.env.LINE_SECRET;

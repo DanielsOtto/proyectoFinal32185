@@ -3,6 +3,7 @@ import morgan from 'morgan';
 import { logger } from '../config/pino.js';
 import routerUser from '../routers/user.router.js';
 import routerSession from '../routers/session.router.js';
+import routerProduct from '../routers/product.router.js';
 import { errorHandler } from '../middlewares/errorHandler.js';
 
 export class Server {
@@ -16,7 +17,7 @@ export class Server {
     this.#app.use(express.urlencoded({ extended: true }));
     this.#app.use('/api/users', routerUser);
     this.#app.use('/api/sessions', routerSession);
-    // this.#app.use('/api/3')//ruta
+    this.#app.use('/api/products', routerProduct);
     // this.#app.use('/api/4')//ruta
     this.#app.use((err, req, res, next) => {
       console.error(err);

@@ -1,5 +1,7 @@
+import { InvalidArgument } from '../errors/InvalidArgumentError.js';
+import { InvalidFormat } from '../errors/InvalidFormat.js';
 import { createID } from '../utils/createID.js';
-// traer Dto
+import { ProductDto } from '../dtos/ProductDto.js';
 
 
 export class Product {
@@ -8,8 +10,8 @@ export class Product {
   #description
   #price
   #image
-  constructor({ name, price, description, image }) {
-    this.#id = createID();
+  constructor({ id = createID(), name, price, description, image }) {
+    this.#id = id;
     this.#name = name;
     this.#description = description;
     this.#price = price;
@@ -55,6 +57,33 @@ export class Product {
     })
   }
 
-  updateProduct() { } // es necesario ? o con los setters basta ? ! 
-  // EN CUALQUIER CASO HAY Q VALIDAR LA INFO Q ENTRA
+  updateProduct(data) {
+    if (data.name) {
+      const phrase = data.name.replace(/\s+/g, '');
+      if (typeof data.name !== 'string') throw new InvalidFormat('the name must be a string');
+      if (phrase.length === 0) throw new InvalidArgument('nothing entered in the name');
+      if (data.name.length < 2 || data.name.length > 85) throw new InvalidArgument('name. Cannot be less than 3 and greater than 85.');
+      this.#name = data.name;
+    }
+    if (data.price) {
+      if (!Number.isInteger(data.price)) throw new InvalidFormat('price must be an integer');
+      if (data.price <= 0) throw new InvalidArgument('the price have to be 1 or more');
+      this.#price = data.price;
+    }
+    if (data.description) {
+      const phrase = data.description.replace(/\s+/g, '');
+      if (typeof data.description !== 'string') throw new InvalidFormat('the description must be a string');
+      if (phrase.length === 0) throw new InvalidArgument('nothing entered in the description');
+      if (data.description.length > 100) throw new InvalidArgument('the description is very extensive.');
+      this.#description = data.description;
+    }
+    if (data.image) {
+      const phrase = data.image.replace(/\s+/g, '');
+      if (typeof data.image !== 'string') throw new InvalidFormat('the image must be a string');
+      if (phrase.length === 0) throw new InvalidArgument('nothing entered in the image');
+      if (data.image.length > 125) throw new InvalidArgument('the link is very extensive');
+      //validar formato imagen
+      this.#image = data.image;
+    }
+  }
 } 

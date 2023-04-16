@@ -8,8 +8,9 @@ import { Unauthorized } from "../errors/Unauthorized.js";
 export function validateAuth(req, res, next) {
   const token = req.header('auth-token');
   let error = null;
+  const { email } = req.body;
   if (!token) {
-    error = new ForbiddenAccess();
+    error = new ForbiddenAccess(email);
   } else {
 
     try {
@@ -17,11 +18,12 @@ export function validateAuth(req, res, next) {
       req.user = verified;
       next();
     } catch (e) {
+      logger.error(e);
       error = new Unauthorized();
-      logger.error(e)
     }
   }
   if (error) {
-    throw error;
+    logger.error(error);
+    next(error);
   }
 }
