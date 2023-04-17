@@ -1,6 +1,7 @@
 import { logger } from '../../config/pino.js';
 import { User } from '../../models/user.model.js';
-import createCart from '../../models/cart/index.js';
+import cartService from '../../services/cart.service/index.js';
+// import createCart from '../../models/cart/index.js';
 import { encryptPassword } from '../../utils/hashPass.js';
 import { userList } from '../../repositories/user.repository/index.js';
 import { EmailAlreadyRegisterError } from '../../errors/EmailAlreadyRegister.js';
@@ -21,8 +22,10 @@ export class UsersService {
       const userSearch = await userList.findByEmail(email);
       if (userSearch && userSearch.hasOwnProperty('email')) throw new EmailAlreadyRegisterError(email);
       const password = encryptPassword(object);
-      const cart = createCart(); // esto esta mal, tiene que llamar al repo de carrito, y ahi crearlo
-      const idCart = cart.id;
+      // const cart = createCart(); // esto esta mal, tiene que llamar al repo de carrito, y ahi crearlo
+      // const idCart = cart.id;
+      const idCart = await cartService.createCart()
+      console.log(idCart);
       const user = new User(object);
       user.password = password;
       user.idCart = idCart;

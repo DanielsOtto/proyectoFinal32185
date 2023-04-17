@@ -46,7 +46,7 @@ export class MongoDb {
   async findByEmail(email) {
     try {
       const one = await this.#collection.findOne({ email: email });
-      // sin manejo de errores, para poder utilizarlo libremente 
+      // AGREGAR errores, USAR validacion con dos valores 
       // se puede hacer (objeto, true) REVISAR
       return one;
     } catch (e) {
