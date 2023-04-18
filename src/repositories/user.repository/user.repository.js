@@ -29,9 +29,9 @@ export class UserList {
     }
   }
 
-  async findByEmail(email) {
+  async findByEmail(email, validate) {
     try {
-      return await this.#dao.findByEmail(email);
+      return await this.#dao.findByEmail(email, validate);
     } catch (e) {
       logger.error(e);
       throw e;

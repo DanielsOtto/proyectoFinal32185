@@ -1,5 +1,4 @@
 import bcrypt from 'bcrypt';
-// import { findByEmail } from '../models/userModel.js'; ?? A MODELO NO, AL REPO
 import { userList } from '../repositories/user.repository/index.js';
 import { Unauthorized } from '../errors/Unauthorized.js';
 import { HASH_SECRET } from '../config/config.js';
@@ -11,9 +10,8 @@ export function encryptPassword({ password }) {
 
 export async function comparePassword(body) {
   const { email, password } = body;
-  console.log(email, password);
   try {
-    const user = await userList.findByEmail(email);
+    const user = await userList.findByEmail(email, false); // aca seria false
     if (!user) {
       return null;
     }

@@ -4,7 +4,7 @@ import cartService from '../../services/cart.service/index.js';
 // import createCart from '../../models/cart/index.js';
 import { encryptPassword } from '../../utils/hashPass.js';
 import { userList } from '../../repositories/user.repository/index.js';
-import { EmailAlreadyRegisterError } from '../../errors/EmailAlreadyRegister.js';
+// import { EmailAlreadyRegisterError } from '../../errors/EmailAlreadyRegister.js';
 
 // crear USUARIO => asignarle carrito // si existe el correo q hace ? trycatch
 // si existe correo ? crear findOne, mandarle correo y si existe da error !!
@@ -19,8 +19,9 @@ export class UsersService {
       image
     }
     try {
-      const userSearch = await userList.findByEmail(email);
-      if (userSearch && userSearch.hasOwnProperty('email')) throw new EmailAlreadyRegisterError(email);
+      // const userSearch = await userList.findByEmail(email);
+      await userList.findByEmail(email); // no manda nada es true
+      // if (userSearch && userSearch.hasOwnProperty('email')) throw new EmailAlreadyRegisterError(email);
       const password = encryptPassword(object);
       // const cart = createCart(); // esto esta mal, tiene que llamar al repo de carrito, y ahi crearlo
       // const idCart = cart.id;

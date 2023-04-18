@@ -1,9 +1,10 @@
 import { logger } from '../config/pino.js';
-import { EmptyCollection } from '../errors/EmptyCollection.js';
 import { UnsavedObject } from '../errors/UnsavedObject.js';
+import { EmptyCollection } from '../errors/EmptyCollection.js';
 import { IdNotFoundError } from '../errors/IdNotFoundError.js';
 import { ObjectNotUpdated } from '../errors/ObjectNotUpdated.js';
 import { ObjectNotDeleted } from '../errors/ObjectNotDeleted.js';
+import { EmailAlreadyRegisterError } from '../errors/EmailAlreadyRegister.js';
 
 export class MongoDb {
   #collection;
@@ -43,12 +44,19 @@ export class MongoDb {
     }
   }
 
-  async findByEmail(email) {
+  async findByEmail(email, validate = true) {
     try {
-      const one = await this.#collection.findOne({ email: email });
+      const user = await this.#collection.findOne({ email: email });
       // AGREGAR errores, USAR validacion con dos valores 
       // se puede hacer (objeto, true) REVISAR
-      return one;
+
+      // // user.repository  linea 32
+      // // hash.pass  linea 16
+      // // users.service linea 22
+      if (validate) {
+        if (user && user.hasOwnProperty('email')) throw new EmailAlreadyRegisterError(email);
+      }
+      return user;
     } catch (e) {
       logger.error(e);
       throw e;
