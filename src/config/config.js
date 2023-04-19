@@ -11,7 +11,6 @@ dotenv.config({
 export const PORT = process.env.PORT;
 
 // ADMIN
-export const ADMIN = 'admin@admin.com';
 
 
 //mongo
@@ -23,16 +22,14 @@ export const HASH_SECRET = process.env.HASH_SECURITY + process.env.SALT_ROUNDS +
 // jwt
 export const TOKEN_SECRET = process.env.TOKEN_SECRET;
 
-
-
 // EMAILS
+export const ADMIN = process.env.NODEMAILER_USER;
 export const NODEMAILER_CONFIG = {
-  host: 'smtp.ethereal.email',
-  port: 587,
+  host: 'smtp.gmail.com',
+  port: 465,
+  secure: true,
   auth: {
-    user: process.env.NODEMAILER_USER,  // estan en otro archivo 
+    user: process.env.NODEMAILER_USER,
     pass: process.env.NODEMAILER_PASS
   }
 };
-
-// PREGUNTA: LOS CORREOS CON GMAIL, o con los de prueba alcanza ?

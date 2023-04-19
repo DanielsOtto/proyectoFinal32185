@@ -18,6 +18,10 @@ export class Cart {
     return this.#products;
   }
 
+  get cantProducts() {
+    return this.#products.amount;
+  }
+
   /**
    * @param {any} productId
    */
@@ -61,5 +65,13 @@ export class Cart {
       id: this.#id,
       products: this.#products,
     });
+  };
+
+  hasProducts() {
+    return this.#products.length > 0;
+  };
+
+  emptyCart() {
+    this.#products = [];
   };
 }

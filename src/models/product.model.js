@@ -54,7 +54,7 @@ export class Product {
       price: this.#price,
       description: this.#description,
       image: this.#image
-    })
+    });
   }
 
   updateProduct(data) {

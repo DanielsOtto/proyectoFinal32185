@@ -1,6 +1,6 @@
 import { createTransport } from 'nodemailer';
-import { NODEMAILER_CONFIG } from '../config.js';
-import { logger } from '../pino.js';
+import { NODEMAILER_CONFIG } from '../../config/config.js';
+import { logger } from '../../config/pino.js';
 
 
 export default class SendMails {
@@ -12,7 +12,7 @@ export default class SendMails {
       return await this.nodemailerClient.sendMail(mailOptions);
     } catch (err) {
       logger.error(err);
-      throw new Error(err.message);
+      throw new Error(err.message);// manejador de errores
     }
   }
 }

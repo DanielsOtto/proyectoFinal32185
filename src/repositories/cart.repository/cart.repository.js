@@ -2,7 +2,7 @@ import { logger } from '../../config/pino.js';
 import createCart from '../../models/cart/index.js';
 import { Cart } from '../../models/cart/cart.model.js';
 
-const cart = createCart();
+const cart = createCart();// esto va o NO ?? revisar
 
 export class CartList {
   #dao;
@@ -19,7 +19,7 @@ export class CartList {
       throw e;
     }
   }
-
+  // REVISAR XQ AHI DOS SAVES !
   // aca no retorno nada
   async save(cart) {
     try {
@@ -57,4 +57,5 @@ export class CartList {
       throw e;
     }
   }
+
 }

@@ -2,9 +2,10 @@ import express from 'express';
 import morgan from 'morgan';
 import { logger } from '../config/pino.js';
 import routerUser from '../routers/user.router.js';
-import cartRouter from '../routers/cart.router.js';
 import routerSession from '../routers/session.router.js';
 import routerProduct from '../routers/product.router.js';
+import routerCart from '../routers/cart.router.js';
+import routerOrder from '../routers/order.router.js';
 import { errorHandler } from '../middlewares/errorHandler.js';
 
 
@@ -20,13 +21,15 @@ export class Server {
     this.#app.use('/api/users', routerUser);
     this.#app.use('/api/sessions', routerSession);
     this.#app.use('/api/products', routerProduct);
-    this.#app.use('/api/shoppingcartproducts', cartRouter);
-    // this.#app.use('/api/4')//ruta
+    this.#app.use('/api/shoppingcartproducts', routerCart);
+    this.#app.use('/api/orders', routerOrder);
+    // AVERICUAR SI LOS CONTROLLERS van en plural
+    // this.#app.use('/api/4', routerOrder)
     this.#app.use((err, req, res, next) => {
-      console.error(err);
+      console.error(err); // no va
       next(err);
     }, errorHandler);
-    // this.#app.use(errorHandler);//ruta manejador errores
+
     this.#app.use("*", (req, res) => {
       const err = Error(`Requested path ${req.path} not found`);
       res.status(404).send({
@@ -36,6 +39,7 @@ export class Server {
       });
     });
   }
+
   async connect({ port = 0 }) {
     return new Promise((resolve, reject) => {
       this.#server = this.#app.listen(port, () => {
