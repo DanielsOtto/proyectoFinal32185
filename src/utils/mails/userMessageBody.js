@@ -26,7 +26,7 @@ export function userMessageBody(email, products) {
   };
 }
 
-// hace falta JSON.stringify ?
+// modificar a mensaje HTML !!
 
 [
   {

@@ -8,7 +8,8 @@ export class Order {
   #products;
   constructor(idClient, products) {
     this.#id = createID();
-    this.#date = new Date();
+    // // this.#date = new Date(); 
+    this.#date = (new Date(Date.now())).toLocaleString();
     this.#idClient = idClient;
     this.#products = products;
   }

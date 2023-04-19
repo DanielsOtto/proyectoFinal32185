@@ -1,11 +1,12 @@
 import express from 'express';
 import morgan from 'morgan';
 import { logger } from '../config/pino.js';
+import routerCart from '../routers/cart.router.js';
 import routerUser from '../routers/user.router.js';
+import routerImage from '../routers/image.router.js';
+import routerOrder from '../routers/order.router.js';
 import routerSession from '../routers/session.router.js';
 import routerProduct from '../routers/product.router.js';
-import routerCart from '../routers/cart.router.js';
-import routerOrder from '../routers/order.router.js';
 import { errorHandler } from '../middlewares/errorHandler.js';
 
 
@@ -16,17 +17,17 @@ export class Server {
     this.#app = express();
 
     this.#app.use(morgan('dev'));
+    this.#app.use(express.static('public'));
     this.#app.use(express.json());
     this.#app.use(express.urlencoded({ extended: true }));
+    this.#app.use('/api/images', routerImage);
     this.#app.use('/api/users', routerUser);
     this.#app.use('/api/sessions', routerSession);
     this.#app.use('/api/products', routerProduct);
     this.#app.use('/api/shoppingcartproducts', routerCart);
     this.#app.use('/api/orders', routerOrder);
-    // AVERICUAR SI LOS CONTROLLERS van en plural
-    // this.#app.use('/api/4', routerOrder)
+
     this.#app.use((err, req, res, next) => {
-      console.error(err); // no va
       next(err);
     }, errorHandler);
 
