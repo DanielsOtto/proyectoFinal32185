@@ -12,7 +12,7 @@ export default class SendMails {
       return await this.nodemailerClient.sendMail(mailOptions);
     } catch (err) {
       logger.error(err);
-      throw new Error(err.message);// manejador de errores
+      throw new Error(err.message);
     }
   }
 }

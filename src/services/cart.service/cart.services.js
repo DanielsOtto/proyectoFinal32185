@@ -1,5 +1,7 @@
 import { logger } from '../../config/pino.js';
 import createCart from '../../models/cart/index.js';
+import { transformData } from '../../utils/transformData.js';
+import { EmptyCartError } from '../../errors/EmptyCartError.js';
 import cartList from '../../repositories/cart.repository/index.js';
 import { productList } from '../../repositories/product.repository/index.js';
 
@@ -8,7 +10,7 @@ export class CartService {
   async createCart() {
     try {
       const cart = createCart();
-      await cartList.saveCart(cart);
+      await cartList.save(cart.data());
       return cart.id;
     } catch (e) {
       logger.error(e);
@@ -21,7 +23,7 @@ export class CartService {
       const product = await productList.getById(id_prod);
       const cart = await cartList.getById(idCart);
       cart.addProduct = id_prod;
-      await cartList.updateById(idCart, cart.data()); // data() deberia ser en repos ?
+      await cartList.updateById(idCart, cart.data());
       return product.data();
     } catch (e) {
       logger.error(e);
@@ -29,10 +31,12 @@ export class CartService {
     }
   }
 
-  async getById(idCart) {
+  async getById(email, idCart) {
     try {
       const cart = await cartList.getById(idCart);
-      return cart.data();
+      if (cart.products.length === 0) throw new EmptyCartError(email);
+
+      return await transformData(cart.products);
     } catch (e) {
       logger.error(e);
       throw e;
@@ -44,7 +48,7 @@ export class CartService {
       const product = await productList.getById(id);
       const cart = await cartList.getById(idCart);
       cart.removeProduct = id;
-      await cartList.updateById(idCart, cart.data()); // revisar otrodos los servicios, .data() en repo
+      await cartList.updateById(idCart, cart.data());
       return product.data();
     } catch (e) {
       logger.error(e);

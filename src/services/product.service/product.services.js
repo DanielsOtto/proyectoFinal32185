@@ -1,7 +1,6 @@
 import { logger } from "../../config/pino.js";
-import { Product } from '../../models/product.model.js';
+import createProductModel from "../../models/product.model/index.js";
 import { productList } from '../../repositories/product.repository/index.js';
-
 
 export class ProductService {
 
@@ -13,12 +12,12 @@ export class ProductService {
       image
     };
     try {
-      const product = new Product(object); // crea ID
+      const product = createProductModel(object);
       await productList.save(product);
       return product.data();
     } catch (e) {
-      console.log(e);
-      // logger.error(e);
+      console.log(e); // no va
+      logger.error(e);
       throw e;
     }
   }

@@ -5,12 +5,12 @@ import { generateToken } from '../../utils/auth.js';
 
 export class UserController {
 
-  async save({ body }, res, next) {
+  async createUser({ body }, res, next) {
     try {
       new UserValidator(body);
-      const user = await usersService.save(body);
+      const user = await usersService.createUser(body);
       const token = generateToken(user);
-      res.status(201).header('auth-token', token).json({ data: token });
+      res.status(201).set('Authorization', token).json({ token: token });
     } catch (e) {
       logger.error(e);
       next(e);
@@ -19,9 +19,10 @@ export class UserController {
 
   async getById(req, res, next) {
     const { user } = req;
-    console.log(`RUTA PROTEGIDA`); // NO VA
     try {
-      res.status(200).json({ info: user });
+      const userInfo = await usersService.getById(user.id);
+      delete userInfo.password;
+      res.status(200).json({ info: userInfo });
     } catch (e) {
       logger.error(e);
       next(e);

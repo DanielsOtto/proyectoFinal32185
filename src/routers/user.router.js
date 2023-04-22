@@ -4,8 +4,8 @@ import { validateAuth } from '../middlewares/validateAuth.js';
 
 const routerUser = Router();
 
-routerUser.post('/', userController.save) // registra un nuevo usuario 
-routerUser.get('/', validateAuth, userController.getById) // INCOMPLETO
+routerUser.post('/', userController.createUser) // registra un nuevo usuario 
+routerUser.get('/', validateAuth, userController.getById) // 
 // devuelve los datos del usuario logueado (solo usuarios logueados)
 
 export default routerUser;

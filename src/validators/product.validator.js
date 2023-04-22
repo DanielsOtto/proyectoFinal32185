@@ -1,5 +1,6 @@
-import { InvalidArgument } from "../errors/InvalidArgumentError.js";
+import { logger } from "../config/pino.js";
 import { InvalidFormat } from "../errors/InvalidFormat.js";
+import { InvalidArgument } from "../errors/InvalidArgumentError.js";
 
 
 export class ProductValidator {
@@ -22,6 +23,12 @@ export class ProductValidator {
     if (typeof this.image !== 'string') throw new InvalidFormat('the image must be a string');
     if (this.image.length > 125) throw new InvalidArgument('the link is very extensive');
     if (this.image.replace(/\s+/g, '').length === 0) throw new InvalidArgument('product image');
-    //validar formato imagen
+    try {
+      this.image = new URL(image)
+      if (this.image.href.indexOf('images') === -1) throw new InvalidArgument('wrong url!');
+    } catch (e) {
+      logger.error(e);
+      throw e;
+    }
   }
 }

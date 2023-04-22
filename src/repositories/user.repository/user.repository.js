@@ -1,8 +1,6 @@
 import { logger } from '../../config/pino.js';
-import { User } from '../../models/user.model.js';
+import createUserModel from '../../models/user.model/index.js';
 
-// no puedo fijarme si existe o no, xq el getbyId da error y el trycath me manda el error
-//habria q ver como usarlo teniendo en cuenta eso
 
 export class UserList {
   #dao;
@@ -12,7 +10,7 @@ export class UserList {
 
   async save(user) {
     try {
-      await this.#dao.save(user.data());
+      await this.#dao.save(user);
     } catch (e) {
       logger.error(e);
       throw e;
@@ -22,7 +20,7 @@ export class UserList {
   async getById(id) {
     try {
       const dto = await this.#dao.getById(id);
-      return new User(dto);
+      return createUserModel(dto);
     } catch (e) {
       logger.error(e);
       throw e;

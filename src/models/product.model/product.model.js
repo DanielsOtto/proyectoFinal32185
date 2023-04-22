@@ -1,7 +1,8 @@
-import { InvalidArgument } from '../errors/InvalidArgumentError.js';
-import { InvalidFormat } from '../errors/InvalidFormat.js';
-import { createID } from '../utils/createID.js';
-import { ProductDto } from '../dtos/ProductDto.js';
+import { InvalidArgument } from '../../errors/InvalidArgumentError.js';
+import { InvalidFormat } from '../../errors/InvalidFormat.js';
+import { ProductDto } from '../../dtos/ProductDto.js';
+import { createID } from '../../utils/createID.js';
+import { logger } from '../../config/pino.js';
 
 
 export class Product {
@@ -82,8 +83,14 @@ export class Product {
       if (typeof data.image !== 'string') throw new InvalidFormat('the image must be a string');
       if (phrase.length === 0) throw new InvalidArgument('nothing entered in the image');
       if (data.image.length > 125) throw new InvalidArgument('the link is very extensive');
-      //validar formato imagen
-      this.#image = data.image;
+      try {
+        this.image = new URL(data.image)
+        if (this.image.href.indexOf('images') === -1) throw new InvalidArgument('wrong url!');
+      } catch (e) {
+        logger.error(e);
+        throw e;
+      }
+      this.image = data.image;
     }
   }
 } 

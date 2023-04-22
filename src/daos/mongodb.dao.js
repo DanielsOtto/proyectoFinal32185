@@ -47,12 +47,7 @@ export class MongoDb {
   async findByEmail(email, validate = true) {
     try {
       const user = await this.#collection.findOne({ email: email });
-      // AGREGAR errores, USAR validacion con dos valores 
-      // se puede hacer (objeto, true) REVISAR
 
-      // // user.repository  linea 32
-      // // hash.pass  linea 16
-      // // users.service linea 22
       if (validate) {
         if (user && user.hasOwnProperty('email')) throw new EmailAlreadyRegisterError(email);
       }

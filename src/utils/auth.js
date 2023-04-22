@@ -10,7 +10,7 @@ export function generateToken(user) {
       idCart: user.idCart
     },
     TOKEN_SECRET,
-    { expiresIn: '24h' }
+    { expiresIn: '2h' }
   );
 }
 

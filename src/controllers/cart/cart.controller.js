@@ -16,9 +16,9 @@ export class CartController {
   }
 
   async getAllProducts({ user }, res, next) {
-    const { idCart } = user;
+    const { email, idCart } = user;
     try {
-      const products = await cartService.getById(idCart);
+      const products = await cartService.getById(email, idCart);
       res.status(200).json({ Products: products });
     } catch (e) {
       logger.error(e);

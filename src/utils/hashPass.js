@@ -1,22 +1,22 @@
 import bcrypt from 'bcrypt';
-import { userList } from '../repositories/user.repository/index.js';
-import { Unauthorized } from '../errors/Unauthorized.js';
-import { HASH_SECRET } from '../config/config.js';
 import { logger } from '../config/pino.js';
+import { HASH_SECRET } from '../config/config.js';
+import { userList } from '../repositories/user.repository/index.js';
 
 export function encryptPassword({ password }) {
   return bcrypt.hashSync(password, HASH_SECRET);
 }
 
-export async function comparePassword(body) {
-  const { email, password } = body;
+export async function comparePassword(email, password) {
   try {
-    const user = await userList.findByEmail(email, false); // aca seria false
+    const user = await userList.findByEmail(email, false);
     if (!user) {
       return null;
     }
     const validPassword = bcrypt.compareSync(password, user.password);
-    if (!validPassword) throw new Unauthorized('Invalid credentials!');
+    if (!validPassword) {
+      return null;
+    }
     return user;
   } catch (e) {
     logger.error(e);

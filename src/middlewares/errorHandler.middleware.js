@@ -1,5 +1,6 @@
 export function errorHandler(error, req, res, next) {
   switch (error.type) {
+    case 'EMPTY_CART':
     case 'EMPTY_COLLECTION':
       res.status(204);
       break;
@@ -13,7 +14,6 @@ export function errorHandler(error, req, res, next) {
     case 'FORBIDDEN_ACCESS':
       res.status(403);
       break;
-    case 'EMPTY_CART':
     case 'ID_NOT_FOUND':
       res.status(404);
       break;

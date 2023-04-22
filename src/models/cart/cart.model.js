@@ -63,7 +63,7 @@ export class Cart {
   data() {
     return new CartDto({
       id: this.#id,
-      products: this.#products,
+      products: this.#products
     });
   };
 

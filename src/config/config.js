@@ -1,5 +1,4 @@
 import dotenv from 'dotenv';
-// // import path from 'path';
 
 dotenv.config({
   // path:
@@ -11,7 +10,7 @@ dotenv.config({
 export const PORT = process.env.PORT;
 
 // ADMIN
-
+export const ADMIN = process.env.NODEMAILER_USER;
 
 //mongo
 export const MONGO_CNS = process.env.MONGODB;
@@ -23,7 +22,6 @@ export const HASH_SECRET = process.env.HASH_SECURITY + process.env.SALT_ROUNDS +
 export const TOKEN_SECRET = process.env.TOKEN_SECRET;
 
 // EMAILS
-export const ADMIN = process.env.NODEMAILER_USER;
 export const NODEMAILER_CONFIG = {
   host: 'smtp.gmail.com',
   port: 465,

@@ -1,5 +1,6 @@
 import { logger } from '../../config/pino.js';
-import { Product } from '../../models/product.model.js';
+import createProductModel from '../../models/product.model/index.js';
+
 
 export class ProductList {
   #dao;
@@ -19,7 +20,7 @@ export class ProductList {
   async getById(id) {
     try {
       const dto = await this.#dao.getById(id);
-      return new Product(dto);
+      return createProductModel(dto);
     } catch (e) {
       logger.error(e);
       throw e;

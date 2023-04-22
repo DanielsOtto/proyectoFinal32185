@@ -1,5 +1,5 @@
-import { createID } from "../utils/createID.js";
-import { OrderDto } from '../dtos/OrderDto.js';
+import { createID } from "../../utils/createID.js";
+import { OrderDto } from '../../dtos/OrderDto.js';
 
 export class Order {
   #id;
@@ -8,7 +8,6 @@ export class Order {
   #products;
   constructor(idClient, products) {
     this.#id = createID();
-    // // this.#date = new Date(); 
     this.#date = (new Date(Date.now())).toLocaleString();
     this.#idClient = idClient;
     this.#products = products;
@@ -16,6 +15,10 @@ export class Order {
 
   get id() {
     return this.#id;
+  }
+
+  get date() {
+    return this.#date;
   }
 
   data() {
@@ -26,16 +29,4 @@ export class Order {
       products: this.#products
     });
   }
-
 }
-
-
-// {
-//   id: 1;
-//   fecha: (timestamp);
-//   idCliente: 1;
-//   prods: [
-//     { prod: { id, name, description, price, image, }, cant: 2 },
-//     { prod: { id, name, description, price, image, }, cant: 1 }
-//   ]
-// }

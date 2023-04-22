@@ -7,7 +7,9 @@ import routerImage from '../routers/image.router.js';
 import routerOrder from '../routers/order.router.js';
 import routerSession from '../routers/session.router.js';
 import routerProduct from '../routers/product.router.js';
-import { errorHandler } from '../middlewares/errorHandler.js';
+import { errorMiddleware } from '../middlewares/errorMiddleware.js';
+import { errorHandler } from '../middlewares/errorHandler.middleware.js';
+import { handleNotFount } from '../middlewares/handleNotFound.middleware.js';
 
 
 export class Server {
@@ -26,19 +28,8 @@ export class Server {
     this.#app.use('/api/products', routerProduct);
     this.#app.use('/api/shoppingcartproducts', routerCart);
     this.#app.use('/api/orders', routerOrder);
-
-    this.#app.use((err, req, res, next) => {
-      next(err);
-    }, errorHandler);
-
-    this.#app.use("*", (req, res) => {
-      const err = Error(`Requested path ${req.path} not found`);
-      res.status(404).send({
-        success: false,
-        message: `Requested path ${req.path} not found`,
-        stack: err.stack,
-      });
-    });
+    this.#app.use(errorMiddleware, errorHandler);
+    this.#app.use("*", handleNotFount);
   }
 
   async connect({ port = 0 }) {
