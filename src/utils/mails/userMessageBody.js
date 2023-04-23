@@ -1,8 +1,8 @@
-import { ADMIN } from "../../config/config.js";
+import { ADMIN } from '../../config/config.js';
 
 
 export function userMessageBody(email, products, order) {
-  let productsText = "";
+  let productsText = '';
   products.forEach(product => {
     productsText += `
       <ul>

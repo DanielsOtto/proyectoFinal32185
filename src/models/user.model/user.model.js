@@ -2,9 +2,6 @@ import { createID } from '../../utils/createID.js';
 import { UserDto } from '../../dtos/UserDto.js';
 
 
-// el que crea el usuario, antes crea un carrito y le da al usuario ese ID de carrito
-//entonces el ID de carrito NO deberia de ir en el modelo, deberia de ir en el servicio ?
-
 export class User {
   #id;
   #email;
@@ -13,8 +10,8 @@ export class User {
   #lastname;
   #image;
   #idCart;
-  constructor({ email, password, name, lastname, image, idCart }) {
-    this.#id = createID();
+  constructor({ id = createID(), email, password, name, lastname, image, idCart }) {
+    this.#id = id;
     this.#email = email;
     this.#password = password;
     this.#name = name;

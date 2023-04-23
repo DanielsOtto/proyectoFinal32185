@@ -1,5 +1,5 @@
-import { logger } from "../../config/pino.js";
-// modelos
+import { logger } from '../../config/pino.js';
+
 
 export class OrderList {
   #dao;
@@ -7,7 +7,6 @@ export class OrderList {
     this.#dao = dao;
   }
 
-  // guardar order
   async save(order) {
     try {
       await this.#dao.save(order.data());
@@ -17,7 +16,6 @@ export class OrderList {
     }
   }
 
-  //obtener todos falta
   async getAll() {
     try {
       return await this.#dao.getAll();

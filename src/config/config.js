@@ -1,10 +1,10 @@
 import dotenv from 'dotenv';
 
 dotenv.config({
-  // path:
-  //   process.env.NODE_ENV === 'prod'
-  //     ? '.env'
-  //     : 'finish.env'
+  path:
+    process.env.NODE_ENV === 'prod'
+      ? '.env'
+      : 'env.dev'
 });
 
 export const PORT = process.env.PORT;
@@ -20,6 +20,7 @@ export const HASH_SECRET = process.env.HASH_SECURITY + process.env.SALT_ROUNDS +
 
 // jwt
 export const TOKEN_SECRET = process.env.TOKEN_SECRET;
+export const EXPIRES_IN = 60 * 60 * 2;
 
 // EMAILS
 export const NODEMAILER_CONFIG = {

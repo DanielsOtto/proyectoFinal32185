@@ -15,7 +15,7 @@ export class MongoDb {
   async save(dto) {
     try {
       const result = await this.#collection.insertOne(dto);
-      if (!result.acknowledged) throw new UnsavedObject(dto); // manejo de errores
+      if (!result.acknowledged) throw new UnsavedObject(dto);
     } catch (e) {
       logger.error(e);
       throw e;

@@ -1,4 +1,4 @@
-import { logger } from "../../config/pino.js";
+import { logger } from '../../config/pino.js';
 import productService from '../../services/product.service/index.js';
 import { ProductValidator } from '../../validators/product.validator.js';
 

@@ -1,4 +1,4 @@
-import { ImageController } from "./image.controller.js";
+import { ImageController } from './image.controller.js';
 
 const imageController = new ImageController();
 

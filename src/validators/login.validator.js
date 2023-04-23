@@ -1,5 +1,5 @@
-import { InvalidFormat } from "../errors/InvalidFormat.js";
-import { InvalidArgument } from "../errors/InvalidArgumentError.js";
+import { InvalidFormat } from '../errors/InvalidFormat.js';
+import { InvalidArgument } from '../errors/InvalidArgumentError.js';
 
 
 export class LoginValidator {

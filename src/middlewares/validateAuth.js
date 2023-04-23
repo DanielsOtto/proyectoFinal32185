@@ -1,9 +1,8 @@
 import { logger } from '../config/pino.js';
 import { verifyToken } from '../utils/auth.js';
-import { ForbiddenAccess } from '../errors/ForbiddenAccess.js';
 import { Unauthorized } from '../errors/Unauthorized.js';
+import { ForbiddenAccess } from '../errors/ForbiddenAccess.js';
 
-//ANDA BIEN
 
 export function validateAuth(req, res, next) {
   const token = req.header('Authorization');

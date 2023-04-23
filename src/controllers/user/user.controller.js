@@ -1,9 +1,11 @@
 import { logger } from '../../config/pino.js';
-import { usersService } from '../../services/user.service/index.js';
-import { UserValidator } from '../../validators/user.validator.js';
+import usersService from '../../services/user.service/index.js';
 import { generateToken } from '../../utils/auth.js';
+import { UserValidator } from '../../validators/user.validator.js';
 
 export class UserController {
+
+
 
   async createUser({ body }, res, next) {
     try {

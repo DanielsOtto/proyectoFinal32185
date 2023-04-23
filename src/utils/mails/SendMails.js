@@ -1,6 +1,6 @@
 import { createTransport } from 'nodemailer';
-import { NODEMAILER_CONFIG } from '../../config/config.js';
 import { logger } from '../../config/pino.js';
+import { NODEMAILER_CONFIG } from '../../config/config.js';
 
 
 export default class SendMails {

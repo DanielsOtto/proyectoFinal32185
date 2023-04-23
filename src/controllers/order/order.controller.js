@@ -1,4 +1,4 @@
-import { logger } from "../../config/pino.js";
+import { logger } from '../../config/pino.js';
 import orderService from '../../services/order.service/index.js';
 
 export class OrderController {

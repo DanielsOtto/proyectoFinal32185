@@ -1,8 +1,8 @@
-import { InvalidArgument } from '../../errors/InvalidArgumentError.js';
-import { InvalidFormat } from '../../errors/InvalidFormat.js';
-import { ProductDto } from '../../dtos/ProductDto.js';
-import { createID } from '../../utils/createID.js';
 import { logger } from '../../config/pino.js';
+import { createID } from '../../utils/createID.js';
+import { ProductDto } from '../../dtos/ProductDto.js';
+import { InvalidFormat } from '../../errors/InvalidFormat.js';
+import { InvalidArgument } from '../../errors/InvalidArgumentError.js';
 
 
 export class Product {

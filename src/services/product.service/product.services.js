@@ -1,8 +1,12 @@
-import { logger } from "../../config/pino.js";
-import createProductModel from "../../models/product.model/index.js";
-import { productList } from '../../repositories/product.repository/index.js';
+import { logger } from '../../config/pino.js';
+import createProductModel from '../../models/product.model/index.js';
+
 
 export class ProductService {
+  #productRepository;
+  constructor(productList) {
+    this.#productRepository = productList;
+  }
 
   async save({ name, description, price, image }) {
     const object = {
@@ -13,10 +17,9 @@ export class ProductService {
     };
     try {
       const product = createProductModel(object);
-      await productList.save(product);
+      await this.#productRepository.save(product);
       return product.data();
     } catch (e) {
-      console.log(e); // no va
       logger.error(e);
       throw e;
     }
@@ -24,7 +27,7 @@ export class ProductService {
 
   async getById(id) {
     try {
-      const product = await productList.getById(id);
+      const product = await this.#productRepository.getById(id);
       return product.data();
     } catch (e) {
       logger.error(e);
@@ -34,7 +37,7 @@ export class ProductService {
 
   async getAll() {
     try {
-      return await productList.getAll();
+      return await this.#productRepository.getAll();
     } catch (e) {
       logger.error(e);
       throw e;
@@ -44,9 +47,9 @@ export class ProductService {
   async updateById(id, data) {
     data.id = id;
     try {
-      const product = await productList.getById(id);
+      const product = await this.#productRepository.getById(id);
       product.updateProduct(data);
-      await productList.updateById(product);
+      await this.#productRepository.updateById(product);
       return product.data();
     } catch (e) {
       logger.error(e);
@@ -56,7 +59,7 @@ export class ProductService {
 
   async deleteById(id) {
     try {
-      await productList.deleteById(id);
+      await this.#productRepository.deleteById(id);
     } catch (e) {
       logger.error(e);
       throw e;
