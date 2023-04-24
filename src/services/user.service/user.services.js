@@ -22,7 +22,6 @@ export class UsersService {
       await this.#userRepository.findByEmail(email);
       const password = encryptPassword(object);
       const idCart = await cartService.createCart()
-      console.log(idCart);
       const user = createUserModel(object);
       user.password = password;
       user.idCart = idCart;

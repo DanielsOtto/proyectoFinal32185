@@ -20,5 +20,6 @@ export async function comparePassword(email, password) {
     return user;
   } catch (e) {
     logger.error(e);
+    throw e;
   }
 }

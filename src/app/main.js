@@ -4,8 +4,6 @@ import { PORT } from '../config/config.js';
 
 const server = createServer();
 
-// aca hay q preguntar si es MongoDB Local (dev) / Mongo Atlas (prod)
-//todo esto se persiste en MongoDB Local (dev) / Mongo Atlas (prod)
 
 try {
   await server.connect({ port: PORT });
